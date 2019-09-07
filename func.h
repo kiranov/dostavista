@@ -3,8 +3,11 @@
     #include <map>
     #include <string>
     #include <vector>
+    #include <fstream>
+    #include "json.hpp"
 
     using namespace std;
+    using json = nlohmann::json;
 
     enum struct Action{
         pickup,
@@ -35,12 +38,21 @@
     };
 
     class courier{
+    	public:
         int courier_id;
         int location_x;
         int location_y;
     };
 
+    class depot{
+    	public:
+        int point_id;
+        int location_x;
+        int location_y;
+    };
+
     class order{
+    	public:
         int order_id;
         int pickup_point_id;
         int pickup_location_x;
@@ -55,7 +67,3 @@
         int payment;
 
     };
-
-    //нужно переписать функцию с питона
-    void cheсker(){};
-
