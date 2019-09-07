@@ -26,8 +26,13 @@
         int ferment;
     };
 
-    struct segments{
-        map<Event, Data> segm;
+	class AllEvents{
+        public:
+        vector<vector<Event>> evs;
+    };
+
+	struct segments{
+        map<Event, vector<Data> > segm;
     };
 
     class Events{
