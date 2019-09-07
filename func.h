@@ -1,63 +1,55 @@
     #pragma once
     #include <iostream>
     #include <map>
+    #include <set>
     #include <string>
     #include <vector>
-    #include <fstream>
-    #include "json.hpp"
 
     using namespace std;
-    using json = nlohmann::json;
 
-    enum struct Action{
+    enum class Action{
+        start,
         pickup,
-        dropoff
+        dropoff,
+        finish
     };
 
-    struct Event{
+    class Event{
+        public:
         int courier_id;
         Action action;
         int order_id;
         int point_id;
+        Event(int c_id, Action act, int ord, int point);
     };
 
-    struct Data{
-        struct Event;
+    class Data{
+        public:
+        Event event;
         int ferment;
     };
 
-	class AllEvents{
+    class segments{
         public:
-        vector<vector<Event>> evs;
+        map<Event, vector<Data>> segm;
     };
 
-	struct segments{
-        map<Event, vector<Data> > segm;
-    };
-
-    class Events{
+    class Way{
         public:
-        vector<Event> ev;
+        vector<Event> ways;
         //new_event должен генерировать путь, новый Event класть в вектор(с учетом вероятностой функции)
-        void new_event();
+        void new_event(int n, set<Event> );
     };
 
     class courier{
-    	public:
+        public:
         int courier_id;
-        int location_x;
-        int location_y;
-    };
-
-    class depot{
-    	public:
-        int point_id;
         int location_x;
         int location_y;
     };
 
     class order{
-    	public:
+        public:
         int order_id;
         int pickup_point_id;
         int pickup_location_x;
@@ -72,3 +64,19 @@
         int payment;
 
     };
+
+    class depot{
+        public:
+        int point_id;
+        int location_x;
+        int location_y;
+    };
+
+    set<Event> possible_events(vector<courier> cour, vector<order> ord, vector<depot> dep);
+
+    //нужно переписать функцию с питона
+    void cheсker();
+
+    Event GetNextEvent();
+
+   
