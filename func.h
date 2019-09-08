@@ -1,82 +1,69 @@
     #pragma once
     #include <iostream>
     #include <map>
-    #include <set>
     #include <string>
     #include <vector>
+    #include <fstream>
+    #include "json.hpp"
 
+    using json = nlohmann::json;
     using namespace std;
 
-    enum class Action{
-        start,
-        pickup,
-        dropoff,
-        finish
-    };
-
-    class Event{
-        public:
-        int courier_id;
-        Action action;
+    struct Event{
+	public:
+		int courier_id;
+        string action;
         int order_id;
         int point_id;
-        Event(int c_id, Action act, int ord, int point);
+        bool operator<(const Event& right) const {
+            return courier_id < right.courier_id;
+        }
+
+        bool operator==(const Event& right) const {
+            return courier_id == right.courier_id;
+        }
     };
 
-    class Data{
-        public:
-        Event event;
+    struct Data{
+        struct Event;
         int ferment;
     };
 
-    class segments{
+	class AllEvents{
         public:
-        map<Event, vector<Data>> segm;
+        vector<vector<Event>> evs;
     };
 
-    class Way{
-        public:
-        vector<Event> ways;
+	struct segments{
+        map<Event, vector<Data> > segm;
+    };
+
+    class Events{
+	public:
+        vector<Event> ev;
         //new_event должен генерировать путь, новый Event класть в вектор(с учетом вероятностой функции)
-        void new_event(int n, set<Event> );
+        void new_event();
     };
 
     class courier{
-        public:
-        int courier_id;
-        int location_x;
-        int location_y;
+	public:
+		int location_id;
+		int time;
     };
 
     class order{
-        public:
-        int order_id;
-        int pickup_point_id;
-        int pickup_location_x;
-        int pickup_location_y;
+	public:
+        int pickup_point_id;//location_id
         int pickup_from;
         int pickup_to;
-        int dropoff_point_id;
-        int dropoff_location_x;
-        int dropoff_location_y;
+        int dropoff_point_id;//location_id
         int dropoff_from;
         int dropoff_to;
         int payment;
 
     };
 
-    class depot{
-        public:
-        int point_id;
-        int location_x;
-        int location_y;
-    };
+    map < int, pair < int, int > >  locations;// here pair is (x, y)
+    map < int, courier > couriers;
+    map < int, order > orders;
 
-    set<Event> possible_events(vector<courier> cour, vector<order> ord, vector<depot> dep);
-
-    //нужно переписать функцию с питона
-    void cheсker();
-
-    Event GetNextEvent();
-
-   
