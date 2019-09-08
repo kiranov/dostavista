@@ -15,11 +15,9 @@
         string action;
         int order_id;
         int point_id;
-    
         bool operator<(const Event& right) const {
             return courier_id < right.courier_id;
         }
-
         bool operator==(const Event& right) const {
             return courier_id == right.courier_id;
         }
