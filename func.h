@@ -14,15 +14,24 @@
         dropoff
     };
 
-    struct Event{
+    class Event{
+        public:
         int courier_id;
         Action action;
         int order_id;
         int point_id;
+    
+        bool operator<(const Event& right) const {
+            return courier_id < right.courier_id;
+        }
+
+        bool operator==(const Event& right) const {
+            return courier_id == right.courier_id;
+        }
     };
 
     struct Data{
-        struct Event;
+        Event event;
         int ferment;
     };
 
