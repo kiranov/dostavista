@@ -9,17 +9,15 @@
     using json = nlohmann::json;
     using namespace std;
 
-
     class Event{
         public:
         int courier_id;
-        Action action;
+        string action;
         int order_id;
         int point_id;
         bool operator<(const Event& right) const {
             return courier_id < right.courier_id;
         }
-
         bool operator==(const Event& right) const {
             return courier_id == right.courier_id;
         }

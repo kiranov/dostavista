@@ -22,7 +22,8 @@ void UpdateSegments(segments segm, vector<Event> way) {
     }
 
     vector<Event>::iterator it = way.begin();
-    for(; it != way.end(); it++) {  // выводим их
+    auto nz = next(it, 0);
+    for(; it != next(way.end(), -1); it++) {  // выводим их
         auto nz = next(it, 0);
         bool flag = true;
         int L_ev = 2;
